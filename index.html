@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For Ryan 🌟</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sky: #7dd8f8;
+      --sky-light: #b8ecff;
+      --sky-dark: #4abde8;
+      --kirby-pink: #ff9ec8;
+      --kirby-dark: #e8649a;
+      --blush: #ffb8d4;
+      --ground: #78d878;
+      --ground-dark: #5ab55a;
+      --star: #ffe066;
+      --star-dark: #ffbb00;
+      --white: #fff;
+      --text-dark: #3a1a2e;
+      --text-mid: #7a3a5a;
+      --waddle: #ffaacc;
+    }
+
+    html, body {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--sky);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E⭐%3C/text%3E%3C/svg%3E") 16 16, auto;
+    }
+
+    /* ── Sky gradient ── */
+    .sky-bg {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(180deg, #5bc8f0 0%, #a8e6ff 50%, #c8f0ff 100%);
+      z-index: 0;
+    }
+
+    /* ── Clouds ── */
+    .cloud {
+      position: fixed;
+      background: white;
+      border-radius: 50px;
+      opacity: 0.85;
+      z-index: 1;
+      animation: cloudDrift linear infinite;
+    }
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+    }
+    .cloud::before { width: 60%; height: 140%; top: -40%; left: 15%; }
+    .cloud::after  { width: 40%; height: 120%; top: -30%; right: 10%; }
+
+    @keyframes cloudDrift {
+      from { transform: translateX(-200px); }
+      to   { transform: translateX(calc(100vw + 200px)); }
+    }
+
+    /* ── Ground strip ── */
+    .ground {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 90px;
+      background: var(--ground);
+      z-index: 2;
+      border-top: 6px solid var(--ground-dark);
+      overflow: hidden;
+    }
+    .ground::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: 0; right: 0;
+      height: 30px;
+      background: repeating-linear-gradient(90deg, var(--ground) 0px, var(--ground) 30px, var(--ground-dark) 30px, var(--ground-dark) 60px);
+      opacity: 0.3;
+    }
+
+    /* ── Stars floating ── */
+    .star-float {
+      position: fixed;
+      font-size: 1.4rem;
+      animation: starFloat linear infinite;
+      z-index: 1;
+      filter: drop-shadow(0 0 4px rgba(255,220,0,0.6));
+    }
+    @keyframes starFloat {
+      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.8; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ── Kirby SVG (CSS art) ── */
+    .kirby-mascot {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      animation: kirbyBob 2s ease-in-out infinite;
+      filter: drop-shadow(0 8px 16px rgba(255,100,150,0.4));
+      z-index: 10;
+    }
+    @keyframes kirbyBob {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50%       { transform: translateY(-12px) rotate(3deg); }
+    }
+
+    .kirby-mascot svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Burst stars ── */
+    .burst-star {
+      position: fixed;
+      pointer-events: none;
+      font-size: 1.6rem;
+      animation: burstOut 0.9s ease forwards;
+      z-index: 999;
+    }
+    @keyframes burstOut {
+      0%   { opacity: 1; transform: translate(0,0) scale(0.4) rotate(0deg); }
+      100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1.3) rotate(var(--rot)); }
+    }
+
+    /* ── Main content ── */
+    .content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.4rem;
+      padding: 2rem 1.5rem 120px;
+      max-width: 580px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .title-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      margin-top: 1rem;
+    }
+
+    .eyebrow {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.8rem, 9vw, 4.5rem);
+      color: white;
+      text-shadow: 0 4px 0 var(--kirby-dark), 0 6px 12px rgba(0,0,0,0.15);
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    h1 .star-accent { color: var(--star); text-shadow: 0 4px 0 var(--star-dark), 0 6px 12px rgba(0,0,0,0.2); }
+
+    /* ── Card ── */
+    .card {
+      background: white;
+      border-radius: 28px;
+      padding: 2.2rem 2rem;
+      box-shadow:
+        0 8px 0 rgba(0,0,0,0.08),
+        0 4px 24px rgba(0,100,200,0.12);
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 4px solid rgba(255,255,255,0.8);
+    }
+
+    .card::before {
+      content: '★';
+      position: absolute;
+      top: -15px; right: -10px;
+      font-size: 5rem;
+      color: #fff5cc;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .card::after {
+      content: '★';
+      position: absolute;
+      bottom: -20px; left: -12px;
+      font-size: 4rem;
+      color: #fff0f5;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .compliment-text {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text-dark);
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .compliment-text.out {
+      opacity: 0;
+      transform: scale(0.95) translateY(-6px);
+    }
+    .compliment-text.in {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    /* ── Kirby button ── */
+    .btn {
+      background: var(--kirby-pink);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 1rem 2.8rem;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.15rem;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      box-shadow: 0 6px 0 var(--kirby-dark), 0 8px 20px rgba(232,100,154,0.35);
+      transition: all 0.12s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      background: #ffb0d8;
+      transform: translateY(-3px);
+      box-shadow: 0 9px 0 var(--kirby-dark), 0 12px 24px rgba(232,100,154,0.4);
+    }
+
+    .btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 var(--kirby-dark), 0 4px 10px rgba(232,100,154,0.3);
+    }
+
+    .btn-hint {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      opacity: 0.8;
+    }
+
+    /* ── Counter ── */
+    .counter-pill {
+      background: var(--star);
+      color: var(--text-dark);
+      border-radius: 50px;
+      padding: 0.4rem 1.2rem;
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.9rem;
+      box-shadow: 0 3px 0 var(--star-dark);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .counter-pill.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* ── Footer ── */
+    .footer-note {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      background: rgba(255,255,255,0.25);
+      border-radius: 50px;
+      padding: 0.6rem 1.5rem;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ── Compliment Jar ── */
+    .jar-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      filter: drop-shadow(0 10px 24px rgba(0,100,200,0.18));
+    }
+
+    .jar-lid {
+      width: 220px;
+      height: 30px;
+      background: linear-gradient(180deg, #c8a060 0%, #a07840 100%);
+      border-radius: 14px 14px 4px 4px;
+      border: 3px solid #886030;
+      position: relative;
+      z-index: 2;
+    }
+    .jar-lid::after {
+      content: '';
+      position: absolute;
+      top: 4px; left: 12px; right: 12px;
+      height: 6px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 4px;
+    }
+
+    .jar-body {
+      width: 340px;
+      min-height: 380px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(200,240,255,0.6) 50%, rgba(180,230,255,0.7) 100%);
+      border: 4px solid rgba(255,255,255,0.9);
+      border-top: none;
+      border-radius: 10px 10px 50px 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1.8rem 1.8rem 2rem;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+      box-shadow: inset 0 0 40px rgba(255,255,255,0.4), 0 8px 0 rgba(0,0,0,0.07);
+    }
+
+    .jar-shine {
+      position: absolute;
+      top: 10px; left: 14px;
+      width: 18px;
+      height: 60px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 10px;
+      transform: rotate(-10deg);
+      pointer-events: none;
+    }
+
+    .jar-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.85rem;
+      color: var(--kirby-dark);
+      text-align: center;
+      line-height: 1.3;
+      background: rgba(255,255,255,0.7);
+      border: 2px dashed var(--kirby-pink);
+      border-radius: 8px;
+      padding: 0.3rem 0.7rem;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── Waddle Dee decorations on ground ── */
+    .ground-deco {
+      position: fixed;
+      bottom: 10px;
+      z-index: 3;
+      font-size: 2rem;
+      animation: waddleWalk 6s linear infinite;
+    }
+    @keyframes waddleWalk {
+      0%   { transform: translateX(-80px) scaleX(1); }
+      49%  { transform: translateX(calc(100vw + 80px)) scaleX(1); }
+      50%  { transform: translateX(calc(100vw + 80px)) scaleX(-1); }
+      99%  { transform: translateX(-80px) scaleX(-1); }
+      100% { transform: translateX(-80px) scaleX(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sky-bg"></div>
+
+  <!-- Clouds -->
+  <div class="cloud" style="width:180px;height:50px;top:8%;animation-duration:22s;animation-delay:-5s;"></div>
+  <div class="cloud" style="width:120px;height:36px;top:18%;animation-duration:30s;animation-delay:-12s;"></div>
+  <div class="cloud" style="width:220px;height:60px;top:5%;animation-duration:26s;animation-delay:-18s;"></div>
+  <div class="cloud" style="width:100px;height:30px;top:28%;animation-duration:20s;animation-delay:-3s;"></div>
+
+  <!-- Ground -->
+  <div class="ground"></div>
+
+  <!-- Waddle Dee walking on ground -->
+  <div class="ground-deco" style="animation-delay:-1s;">🟠</div>
+
+  <!-- Floating stars -->
+  <div id="starsBg"></div>
+
+  <!-- Main content -->
+  <div class="content">
+    <!-- Kirby mascot image -->
+    <div class="kirby-mascot">
+      <img src="kirby.png" alt="Kirby" style="width:100%;height:100%;object-fit:contain;"/>
+    </div>
+
+    <div class="title-block">
+      <span class="eyebrow">✨ a little something for ✨</span>
+      <h1>Ryan <span class="star-accent">★</span></h1>
+    </div>
+
+    <!-- Compliment Jar (big, everything inside) -->
+    <div class="jar-wrap">
+      <div class="jar-lid"></div>
+      <div class="jar-body">
+        <div class="jar-shine"></div>
+        <div class="jar-label">compliment jar 🌟</div>
+        <div class="card">
+          <p class="compliment-text in" id="compliment">Click the button below for a special message! ⭐</p>
+        </div>
+        <button class="btn" id="btn" onclick="newCompliment(event)">✨ Give me one! ✨</button>
+        <span class="btn-hint">reach in for a compliment</span>
+      </div>
+    </div>
+
+    <div class="counter-pill" id="counter">⭐ 1 compliment received!</div>
+
+    <p class="footer-note">🌟 Congrats on your thesis, Ryan! I'm so proud of you 💕 🌟</p>
+  </div>
+
+  <script>
+    const compliments = [
+      "I love how passionate you are about your work and your future — watching you care so deeply about what you do is one of my favorite things about you.",
+      "You are one of the most selfless people I've ever known. You give so much of yourself to others, and the world is genuinely better because of it.",
+      "I love that I can be completely, unapologetically myself around you. You make comfort feel effortless.",
+      "Your caring heart is something truly rare. The people around you are so lucky to have someone who loves them the way you do.",
+      "Your mind is something else, Ryan. Your intellect and the way you think about the world genuinely takes my breath away.",
+      "You work harder than almost anyone I know, and you do it all for the right reasons. That's a rare and beautiful thing.",
+      "The way you show up for people — quietly, consistently, without needing recognition — says everything about who you are.",
+      "You finished your honors thesis. Let that sink in. You did that. I hope you're as proud of yourself as I am of you.",
+      "You have this way of making everyone around you feel seen and valued. That's a gift not everyone has.",
+      "I admire you so much — not just for what you accomplish, but for the kind of person you are while accomplishing it.",
+      "Your passion is contagious. Being around you makes me want to care more about things too.",
+      "You deserve every good thing that's coming to you. Every single one.",
+      "You have a quiet strength that I find endlessly reassuring — just knowing you're in my corner makes everything feel more manageable.",
+      "The way you treat people says so much about who you are. You lead with kindness every single time.",
+      "You are someone people can count on, and that is rarer than you know.",
+      "Your integrity is one of the things I admire most about you. You do the right thing even when no one is watching.",
+      "You make the world feel a little softer just by being in it.",
+      "There is a gentleness in you that coexists with your drive, and I think that balance is extraordinary.",
+      "You are the kind of person who makes others feel like they matter. That is a profound gift.",
+      "Your humility is just as impressive as your accomplishments, and that says everything.",
+      "You give so much of yourself without ever making people feel like they owe you. That's pure generosity.",
+      "I genuinely think you are one of the good ones, Ryan. One of the really good ones.",
+      "The way your brain works fascinates me. You see angles and solutions others don't even notice.",
+      "Watching you talk about something you care about is one of my favorite things — your eyes literally light up.",
+      "You ask better questions than most people give answers, and I find that incredibly attractive.",
+      "Your curiosity is infectious. You make me want to learn more about everything.",
+      "You have this rare ability to hold complexity without needing to oversimplify it. That's a sign of a truly sharp mind.",
+      "The depth of your thinking never ceases to amaze me. You don't just scratch the surface of anything.",
+      "You are one of the smartest people I know, and what makes it even better is that you're kind with it.",
+      "Your ability to articulate ideas so clearly is genuinely a superpower.",
+      "The dedication you put into everything you do is something I will always look up to.",
+      "You could have taken the easy road so many times, and you never did. That takes real character.",
+      "Watching you work toward your goals is one of the most motivating things in my life.",
+      "You don't just dream — you do. And that makes all the difference.",
+      "The effort you put in behind the scenes, when no one is watching, is what makes your success so deserved.",
+      "You have pushed through so many hard moments to get where you are. I hope you take a second to appreciate that.",
+      "Your thesis is done because you refused to give up. That determination lives in everything you do.",
+      "You work like someone who believes in something bigger than themselves, and it shows.",
+      "You make me feel seen in a way I didn't know I needed until I met you.",
+      "Being around you feels like exhaling. Like I can just breathe.",
+      "You never make me feel like too much or too little. You just let me be exactly who I am.",
+      "I feel safer with you than I've ever felt with anyone, and that means more than I can put into words.",
+      "You have this way of making ordinary moments feel like something worth remembering.",
+      "Loving you feels easy, and I don't take that for granted for a single second.",
+      "You make me laugh harder than anyone, and that alone is worth everything.",
+      "The comfort I feel with you is something I used to think only existed in books.",
+      "You have seen me at my worst and stayed. I don't think you fully understand how much that means.",
+      "With you I don't have to perform or pretend. That kind of freedom is everything.",
+      "You are enough, exactly as you are, right now.",
+      "I am so glad you exist.",
+      "The world is better with you in it — that is not an exaggeration.",
+      "You deserve every good thing that finds its way to you.",
+      "I am so lucky to know you, let alone love you.",
+      "You matter more than you probably realize.",
+      "There is no one else I would rather have in my corner.",
+      "You are my favorite person, and I mean that with my whole heart.",
+      "I could write a thousand of these and still not cover everything I love about you.",
+      "Today, tomorrow, always — I am rooting for you, Ryan. Always.",
+    ];
+
+    let lastIndex = -1;
+    let count = 0;
+    const burstSymbols = ['⭐','★','💫','✨','🌟','💕'];
+
+    function newCompliment(e) {
+      const el = document.getElementById('compliment');
+      const counter = document.getElementById('counter');
+
+      for (let i = 0; i < 8; i++) spawnBurst(e.clientX, e.clientY);
+
+      el.classList.remove('in');
+      el.classList.add('out');
+
+      setTimeout(() => {
+        let idx;
+        do { idx = Math.floor(Math.random() * compliments.length); }
+        while (idx === lastIndex);
+        lastIndex = idx;
+        count++;
+
+        el.textContent = compliments[idx];
+        el.classList.remove('out');
+        el.classList.add('in');
+
+        counter.textContent = count === 1 ? '⭐ 1 compliment received!' : `⭐ ${count} compliments received!`;
+        counter.classList.add('show');
+      }, 350);
+    }
+
+    function spawnBurst(x, y) {
+      const el = document.createElement('span');
+      el.classList.add('burst-star');
+      el.textContent = burstSymbols[Math.floor(Math.random() * burstSymbols.length)];
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      const angle = Math.random() * 360;
+      const dist = 70 + Math.random() * 100;
+      el.style.setProperty('--tx', Math.cos(angle * Math.PI/180) * dist + 'px');
+      el.style.setProperty('--ty', Math.sin(angle * Math.PI/180) * dist + 'px');
+      el.style.setProperty('--rot', (Math.random() * 360) + 'deg');
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 900);
+    }
+
+    // Floating stars background
+    const bg = document.getElementById('starsBg');
+    const starSymbols = ['⭐','★','✨','💫'];
+    for (let i = 0; i < 14; i++) {
+      const s = document.createElement('span');
+      s.classList.add('star-float');
+      s.textContent = starSymbols[Math.floor(Math.random() * starSymbols.length)];
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.fontSize = (0.8 + Math.random() * 1.4) + 'rem';
+      s.style.animationDuration = (10 + Math.random() * 15) + 's';
+      s.style.animationDelay = (-Math.random() * 15) + 's';
+      bg.appendChild(s);
+    }
+  </script>
+</body>
+</html>
